@@ -17,12 +17,12 @@ class RcResponseStr(Enum):
     notPlaced       =   "Robot not placed. Use: PLACE x,y,facedirection"
 
 
-
 class RobotController:
 
     _directionlookup = {"NORTH":0 , "EAST":1 , "SOUTH":2 , "WEST":3 }
     _robot = SimpleRobot()
     _commandstring = ""
+    _verbose = False
 
 #    The command switcher interprets the string given as input and calls the associated function.
 #    (Similar to case/switch used in other languages)
@@ -42,11 +42,13 @@ class RobotController:
 
 
         func = switcher.get(argument, lambda: RcResponseStr.invCommand.value)
-        a = func()
+        result = func()
 
-        return a
-
-
+        #   Report ist the only command allowed to give a respone whitout verbose mode
+        if argument == "REPORT" or self._verbose:
+            return result
+        else:
+            return ""
 
     #   Functions used by the command switcher
     def __place(self):
@@ -112,7 +114,7 @@ class RobotController:
         x,y,face = self._robot.report()
         directions = ["NORTH","EAST","SOUTH","WEST"]
         return str(x) + "," + str(y) + "," +  directions[face]
-
+    #
     def execCommand(self,command):
         self._commandstring = command
         command = self._commandstring.split()[0]

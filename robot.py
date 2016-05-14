@@ -11,4 +11,4 @@ if  __name__ == '__main__':
             break
 
         response = (rcontroller.execCommand(command))
-        print(response)
+        if len(response) > 0: print(response)
