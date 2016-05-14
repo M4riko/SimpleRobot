@@ -2,8 +2,13 @@ from robot_controller import *
 
 
 if  __name__ == '__main__':
-    r = RobotController()
-    
+    rcontroller = RobotController()
+    verbose = True
     while True:
         command = input()
-        print(r.execCommand(command))
+
+        if command == "EXIT":
+            break
+
+        response = (rcontroller.execCommand(command))
+        print(response)

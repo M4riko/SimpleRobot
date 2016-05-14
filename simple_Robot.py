@@ -15,20 +15,16 @@ The robot can be moved once it is placed, it will ignore commands given before t
 
 '''
 
-from enum import Enum, unique
+from enum import Enum
 
-
-# ROBOT_DIRECTIONS = {"NORTH":0,"EAST":1,"SOUTH":2,"WEST":3}
-
+#   This enumeration contains the results a robot can send to the controller
 class RoboResults(Enum):
     commandAccepted = 1
     notPlaced = -1
     borderReached = -2
     wrongPlacing = -3
 
-
 GRIDSIZE = 5
-
 
 class SimpleRobot:
     # Position of the robot on the grid
@@ -44,41 +40,41 @@ class SimpleRobot:
             return RoboResults.notPlaced
         else:
             self._facing = (self._facing - 1) % 4
-            return RoboResults.commandAccepted
+            return RoboResults.commandAccepted.value
 
     def turn_right(self) -> object:
         if not self._placed:
             return RoboResults.notPlaced
         else:
             self._facing = (self._facing + 1) % 4
-            return RoboResults.commandAccepted
+            return RoboResults.commandAccepted.value
 
     # Moves the robot one square in the direction it is facing
     def move(self):
         if self._facing == 0:
             if self._y < (GRIDSIZE - 1):
                 self._y += 1
-                return RoboResults.commandAccepted
+                return RoboResults.commandAccepted.value
             else:
-                return RoboResults.borderReached
+                return RoboResults.borderReached.value
         elif self._facing == 1:
             if self._x < (GRIDSIZE - 1):
                 self._x += 1
-                return RoboResults.commandAccepted
+                return RoboResults.commandAccepted.value
             else:
-                return RoboResults.borderReached
+                return RoboResults.borderReached.value
         elif self._facing == 2:
             if self._y > 0:
                 self._y -= 1
-                return RoboResults.commandAccepted
+                return RoboResults.commandAccepted.value
             else:
-                return RoboResults.borderReached
+                return RoboResults.borderReached.value
         elif self._facing == 3:
             if self._x > 0:
                 self._x -= 1
-                return RoboResults.commandAccepted
+                return RoboResults.commandAccepted.value
             else:
-                return RoboResults.borderReached
+                return RoboResults.borderReached.value
 
     # reports the position and facing direction of the robot
     def report(self):
@@ -92,6 +88,6 @@ class SimpleRobot:
             self._y = pos_y
             self._facing = face_direction
             self._placed = True
-            return RoboResults.commandAccepted
+            return RoboResults.commandAccepted.value
         else:
-            return RoboResults.wrongPlacing
+            return RoboResults.wrongPlacing.value
