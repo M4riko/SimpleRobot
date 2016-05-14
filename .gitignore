@@ -47,13 +47,7 @@ Temporary Items
 .apdisk
 
 # Folders and files created by IntelliJ
-# User-specific stuff:
-.idea
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/dictionaries
-.idea/vcs.xml
-.idea/jsLibraryMappings.xml
+.idea/
 
 
 ## File-based project format:

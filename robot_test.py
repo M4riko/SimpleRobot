@@ -1,9 +1,5 @@
 # Tests the functionality of the simple_Robot class
-
-
 import unittest
-
-
 
 from simple_Robot import *
 
@@ -46,7 +42,6 @@ class TestRobot(unittest.TestCase):
     def test_report2(self):
         self._robot.place(3, 1, 2)
         self.assertEqual(self._robot.report(), (3, 1, 2))
-
 
     # turn left() and right() function
     def test_turnRight(self):

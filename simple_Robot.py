@@ -11,15 +11,14 @@ The robot accepts 5 commands:
 
 Since the problem is deterministic (the robot always knows where he is on the grid) there is no need to create an actual grid
 instead the position and facing is stored in internal variables and updated on any command.
-The robot can be moved once it is placed, it will ignore commands given before the first place command
-
-
+The robot can be moved once it is placed, it will ignore commands given before the first place command.
 
 '''
 
 from enum import Enum, unique
 
-#ROBOT_DIRECTIONS = {"NORTH":0,"EAST":1,"SOUTH":2,"WEST":3}
+
+# ROBOT_DIRECTIONS = {"NORTH":0,"EAST":1,"SOUTH":2,"WEST":3}
 
 class RoboResults(Enum):
     commandAccepted = 1
@@ -27,18 +26,19 @@ class RoboResults(Enum):
     borderReached = -2
     wrongPlacing = -3
 
+
 GRIDSIZE = 5
 
 
 class SimpleRobot:
     # Position of the robot on the grid
-    _x = 0
-    _y = 0
+    _x = -1
+    _y = -1
     # 0:North 1:East  2:South  3:West
-    _facing = 0
-
+    _facing = -1
     _placed = False
 
+    # Turns the robot left or right
     def turn_left(self):
         if not self._placed:
             return RoboResults.notPlaced
@@ -52,7 +52,8 @@ class SimpleRobot:
         else:
             self._facing = (self._facing + 1) % 4
             return RoboResults.commandAccepted
-    #   Moves the robot one square in the direction it is facing
+
+    # Moves the robot one square in the direction it is facing
     def move(self):
         if self._facing == 0:
             if self._y < (GRIDSIZE - 1):
@@ -78,13 +79,15 @@ class SimpleRobot:
                 return RoboResults.commandAccepted
             else:
                 return RoboResults.borderReached
-    #   reports the position and facing direction of the robot
+
+    # reports the position and facing direction of the robot
     def report(self):
         return self._x, self._y, self._facing
 
     #   Places the robot in a certain position with given facing, can be called multiple times
-    def place(self, pos_x = 0, pos_y = 0, face_direction = 0):
-        if(pos_x >= 0 and pos_y >= 0 and pos_x < GRIDSIZE and pos_y < GRIDSIZE and face_direction >= 0 and face_direction < 4):
+    def place(self, pos_x=0, pos_y=0, face_direction=0):
+        # check if the given parameters are on the grid and the direction is valid
+        if 0 <= pos_x < GRIDSIZE and 0 <= pos_y < GRIDSIZE and pos_y < GRIDSIZE and 0 <= face_direction < 4:
             self._x = pos_x
             self._y = pos_y
             self._facing = face_direction
