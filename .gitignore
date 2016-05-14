@@ -23,10 +23,12 @@ $RECYCLE.BIN/
 
 # OSX
 # =========================
+__pycache__/
 
 /SimpleRobot.iml
 .idea/
 
+*.iml
 
 .DS_Store
 .AppleDouble
