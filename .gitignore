@@ -46,10 +46,9 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# Folders and files created by IntelliJ
-.idea/
 
-
+# Ignore Idea folder
+/.idea
 ## File-based project format:
 *.iws
 
