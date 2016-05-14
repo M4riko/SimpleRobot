@@ -13,7 +13,7 @@ class RcResponseStr(Enum):
     invPlace        =   "Cannot place here"
     invMoveBorder   =   "Boarder reached, command ignored"
     invParamsNum    =   "Need more parameters to place robot. usage: PLACE x y facedirection"
-    comAccept       =   "Commando accepted"
+    comAccept       =   "Command accepted"
     notPlaced       =   "Robot not placed. Use: PLACE x,y,facedirection"
 
 
@@ -116,7 +116,8 @@ class RobotController:
         return str(x) + "," + str(y) + "," +  directions[face]
     #
     def execCommand(self,command):
+        # save the commandstring to extract the parameters
         self._commandstring = command
-        command = self._commandstring.split()[0]
-        returntxt = self.__commandSwitcher(command)
+        # extract the command and call the switcher
+        returntxt = self.__commandSwitcher(self._commandstring.split()[0])
         return returntxt
