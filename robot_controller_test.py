@@ -14,7 +14,7 @@ class TestRobot(unittest.TestCase):
         cls._robotController._verbose = True
 
     def test_Parser1(self):
-        self.assertEqual(self._robotController.execCommand("ASDF"), RcResponseStr.invCommand.value )
+        self.assertEqual(self._robotController.execCommand("ASDF"), RcResponse.invCommand.value )
 
 
 if __name__ == '__main__':

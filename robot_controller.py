@@ -1,10 +1,16 @@
 from simple_Robot import *
 
-# The RobotController interprets the commands given as input, checks them for errors and passes it to the robot.
-# At the moment there is only a single robot in use. More commands could be added to create
+'''
+The RobotController interprets the commands given as input, checks them for errors and passes it to the robot.
+At the moment there is only a single robot in use. More commands could be added to create
+
+The if verbose mode is set by calling the setVerbose(True) the execCommand function will return a status string
+after every command. (See RcResponse) else an empty string is returned
+'''
+
 from enum import Enum
 
-class RcResponseStr(Enum):
+class RcResponse(Enum):
     invParams       =   "Invalid parameters. usage: PLACE x y facedirection"
     invCommand      =   "Invalid command"
     invX            =   "Invalid x parameter"
@@ -18,11 +24,10 @@ class RcResponseStr(Enum):
 
 
 class RobotController:
-
     _directionlookup = {"NORTH":0 , "EAST":1 , "SOUTH":2 , "WEST":3 }
     _robot = SimpleRobot()
     _commandstring = ""
-    _verbose = False
+    _verbose = True
 
 #    The command switcher interprets the string given as input and calls the associated function.
 #    (Similar to case/switch used in other languages)
@@ -40,8 +45,7 @@ class RobotController:
         # command stored locally to give all the functions access to it.
         # (i.e. PLACE needs to interpet also the parameters)
 
-
-        func = switcher.get(argument, lambda: RcResponseStr.invCommand.value)
+        func = switcher.get(argument, lambda: RcResponse.invCommand.value)
         result = func()
 
         #   Report ist the only command allowed to give a respone whitout verbose mode
@@ -57,7 +61,7 @@ class RobotController:
         try:
             commandsplit = self._commandstring.split(" ")[1].split(",")
         except:
-            return RcResponseStr.invParams.value
+            return RcResponse.invParams.value
 
         if len(commandsplit) > 2:
             # check if the x any y values are Integers
@@ -65,50 +69,49 @@ class RobotController:
             try:
                 x = int(commandsplit[0])
             except ValueError:
-                returntxt = RcResponseStr.invX.value
+                returntxt = RcResponse.invX.value
             try:
                 y = int(commandsplit[1])
             except ValueError:
-                returntxt = RcResponseStr.invY.value
+                returntxt = RcResponse.invY.value
             # check direction parameter
             if commandsplit[2] in self._directionlookup:
                facedirection = self._directionlookup[commandsplit[2]]
             else:
-                returntxt = RcResponseStr.invDir.value
+                returntxt = RcResponse.invDir.value
 
             # if all the parameters are correct, try to place the robot with those
             if returntxt == "":
                 if self._robot.place(x,y,facedirection) == RoboResults.wrongPlacing:
-                    returntxt = RcResponseStr.invPlace.value
+                    returntxt = RcResponse.invPlace.value
                 else:
                     returntxt = "Robot placed"
 
         #   if there where not enough parameters
         else:
-            returntxt = RcResponseStr.invParamsNum.value
-
+            returntxt = RcResponse.invParamsNum.value
         return returntxt
 
     def __left(self):
         if self._robot.turn_left() == RoboResults.commandAccepted.value:
-            return RcResponseStr.comAccept.value
+            return RcResponse.comAccept.value
         else:
-            return RcResponseStr.notPlaced.value
+            return RcResponse.notPlaced.value
 
     def __right(self):
         if self._robot.turn_right() == RoboResults.commandAccepted.value:
-            return RcResponseStr.comAccept.value
+            return RcResponse.comAccept.value
         else:
-            return RcResponseStr.notPlaced.value
+            return RcResponse.notPlaced.value
 
     def __move(self):
         r = self._robot.move()
         if r == RoboResults.commandAccepted.value:
-            return RcResponseStr.comAccept.value
+            return RcResponse.comAccept.value
         elif r == RoboResults.notPlaced.value:
-            return RcResponseStr.notPlaced.value
+            return RcResponse.notPlaced.value
         elif r == RoboResults.borderReached.value:
-            return RcResponseStr.invMoveBorder.value
+            return RcResponse.invMoveBorder.value
 
     def __report(self):
         x,y,face = self._robot.report()

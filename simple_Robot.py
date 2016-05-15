@@ -13,6 +13,7 @@ Since the problem is deterministic (the robot always knows where he is on the gr
 instead the position and facing is stored in internal variables and updated on any command.
 The robot can be moved once it is placed, it will ignore commands given before the first place command.
 
+
 '''
 
 from enum import Enum
