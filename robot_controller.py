@@ -11,27 +11,29 @@ after every command. (See RcResponse) else an empty string is returned
 from enum import Enum
 
 class RcResponse(Enum):
-    invParams       =   "Invalid parameters. usage: PLACE x y facedirection"
+    invParams       =   "Invalid parameters. usage: PLACE x,y,facedirection"
     invCommand      =   "Invalid command"
-    invX            =   "Invalid x parameter"
-    invY            =   "Invalid y parameter"
-    invDir          =   "Invalid direction parameter"
     invPlace        =   "Cannot place here"
     invMoveBorder   =   "Boarder reached, command ignored"
-    invParamsNum    =   "Need more parameters to place robot. usage: PLACE x y facedirection"
     comAccept       =   "Command accepted"
     notPlaced       =   "Robot not placed. Use: PLACE x,y,facedirection"
-
+    Placed          =   "Robot placed"
 
 class RobotController:
     _directionlookup = {"NORTH":0 , "EAST":1 , "SOUTH":2 , "WEST":3 }
-    _robot = SimpleRobot()
+    _robot = None
     _commandstring = ""
-    _verbose = True
+    _verbose = False
+
+    def __init__(self):
+        self._robot = SimpleRobot()
 
 #    The command switcher interprets the string given as input and calls the associated function.
 #    (Similar to case/switch used in other languages)
 #    To add a new command define a new function and add a new statement in the switcher dictionary below.
+
+    def setVerbose(self,verboseMode):
+        self._verbose = verboseMode
 
     def __commandSwitcher(self,argument):
         switcher = {
@@ -42,13 +44,12 @@ class RobotController:
             "REPORT"    : self.__report,
         }
 
-        # command stored locally to give all the functions access to it.
-        # (i.e. PLACE needs to interpet also the parameters)
 
         func = switcher.get(argument, lambda: RcResponse.invCommand.value)
         result = func()
 
         #   Report ist the only command allowed to give a respone whitout verbose mode
+
         if argument == "REPORT" or self._verbose:
             return result
         else:
@@ -69,27 +70,27 @@ class RobotController:
             try:
                 x = int(commandsplit[0])
             except ValueError:
-                returntxt = RcResponse.invX.value
+                returntxt = RcResponse.invParams.value
             try:
                 y = int(commandsplit[1])
             except ValueError:
-                returntxt = RcResponse.invY.value
+                returntxt = RcResponse.invParams.value
             # check direction parameter
             if commandsplit[2] in self._directionlookup:
                facedirection = self._directionlookup[commandsplit[2]]
             else:
-                returntxt = RcResponse.invDir.value
+                returntxt = RcResponse.invParams.value
 
             # if all the parameters are correct, try to place the robot with those
             if returntxt == "":
-                if self._robot.place(x,y,facedirection) == RoboResults.wrongPlacing:
+                if self._robot.place(x,y,facedirection) == RoboResults.wrongPlacing.value:
                     returntxt = RcResponse.invPlace.value
                 else:
-                    returntxt = "Robot placed"
+                    returntxt = RcResponse.Placed.value
 
         #   if there where not enough parameters
         else:
-            returntxt = RcResponse.invParamsNum.value
+            returntxt = RcResponse.invParams.value
         return returntxt
 
     def __left(self):
@@ -119,7 +120,7 @@ class RobotController:
         return str(x) + "," + str(y) + "," +  directions[face]
     #
     def execCommand(self,command):
-        # save the commandstring to extract the parameters
+        # save the commandstring locally to extract the parameters (i.e. PLACE command)
         self._commandstring = command
         # extract the command and call the switcher
         returntxt = self.__commandSwitcher(self._commandstring.split()[0])

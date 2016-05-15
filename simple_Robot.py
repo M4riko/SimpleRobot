@@ -38,20 +38,22 @@ class SimpleRobot:
     # Turns the robot left or right
     def turn_left(self):
         if not self._placed:
-            return RoboResults.notPlaced
+            return RoboResults.notPlaced.value
         else:
             self._facing = (self._facing - 1) % 4
             return RoboResults.commandAccepted.value
 
-    def turn_right(self) -> object:
+    def turn_right(self):
         if not self._placed:
-            return RoboResults.notPlaced
+            return RoboResults.notPlaced.value
         else:
             self._facing = (self._facing + 1) % 4
             return RoboResults.commandAccepted.value
 
     # Moves the robot one square in the direction it is facing
     def move(self):
+        if not self._placed:
+            return RoboResults.notPlaced.value
         if self._facing == 0:
             if self._y < (GRIDSIZE - 1):
                 self._y += 1
@@ -84,7 +86,7 @@ class SimpleRobot:
     #   Places the robot in a certain position with given facing, can be called multiple times
     def place(self, pos_x=0, pos_y=0, face_direction=0):
         # check if the given parameters are on the grid and the direction is valid
-        if 0 <= pos_x < GRIDSIZE and 0 <= pos_y < GRIDSIZE and pos_y < GRIDSIZE and 0 <= face_direction < 4:
+        if (0 <= pos_x < GRIDSIZE) and (0 <= pos_y < GRIDSIZE) and  (0 <= face_direction < 4):
             self._x = pos_x
             self._y = pos_y
             self._facing = face_direction
