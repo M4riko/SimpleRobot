@@ -46,7 +46,7 @@ all commands
 
 Two unit test has been implemented to test the robot and the robotController:
 use:
-"pyhton simple_robot_test.py" and "pyhton robot_controller_test.py"
+"pyhton simpleRobotTest.py" and "pyhton robotControllerTest.py"
 
 
 ####simple_robot_test:
@@ -72,7 +72,7 @@ use:
 ```
 +------------------+     Command      +----------------------+     executes     +------------------+
 |                  |     String       |                      |     command      |                  |
-|      main        |  +----------->   |  RoboHandler         |  +------------>  | SimpleRobot      |
+|      main        |  +----------->   |  RobotHandler         |  +------------>  | SimpleRobot      |
 |                  |                  |                      |                  |                  |
 | - console I/O    |                  | -com. interpretation |                  | -Robot logic     |
 | - file I/O       |                  | -error hadling       |                  |                  |
@@ -89,17 +89,17 @@ The programm is composed of three parts:
 - Main program (robot.py):
 Reads from and writes to the console
 
-- Robot controller (robot_controller.py)
+- Robot controller (robotController.py)
 Checks commands for errors and passes them to the robot
 
-- Simple robot (simple_robot.py)
+- Simple robot (simpleRobot.py)
 Actual robot logic, implemented as a simple state machine. All the inputs and outputs of the functions are integer values
 
 
 While implementing this project I was imagining a little toy robot able to accept only simple commands. That’s why the class works entirely
 with integer values. Also everything the robot does is encapsulated in this class which could be easily extended to send the commands (via RF or cable) to
 an actual toy robot.
-The robohandler works as command interpreter, the commands are passed via the execCommand() function. If the verbose mode is off only the REPORT command returns a string
+The robothandler works as command interpreter, the commands are passed via the execCommand() function. If the verbose mode is off only the REPORT command returns a string
 and all errors and warnings are ignored. The class is designed so that new commands can be implemented easily.
 Since Python does not have a case-switch statement i used dictionary mapping for functions which also makes the code more readable.
 To add a new command you simply need to implement a new function and add the function to the dictionary. 
@@ -119,3 +119,4 @@ The model is a derived form of the Model-view-controller but the view in this ca
 acts as "Middle Men" between the actual user interface and the model. I choose this model becouse it allowes a complete separation
 of the command interpretation and the changes in the model, also it would be straight forward to change how the data is delivered to the presenter
 (i.e: over a socket connection)
+
