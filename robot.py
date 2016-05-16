@@ -1,4 +1,4 @@
-from robot_controller import *
+from robotController import *
 
 #   The main program basically just reads the command from the command line and passes it to the roboController
 #   An extra command "EXIT" has been implemented to exit the program without force closing it
