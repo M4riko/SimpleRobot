@@ -35,25 +35,6 @@ class RobotController:
     def setVerbose(self,verboseMode):
         self._verbose = verboseMode
 
-    def __commandSwitcher(self,argument):
-        switcher = {
-            "PLACE"     : self.__place,
-            "LEFT"      : self.__left,
-            "RIGHT"     : self.__right,
-            "MOVE"      : self.__move,
-            "REPORT"    : self.__report,
-        }
-
-
-        func = switcher.get(argument, lambda: RcResponse.invCommand.value)
-        result = func()
-
-        #   Report ist the only command allowed to give a respone whitout verbose mode
-
-        if argument == "REPORT" or self._verbose:
-            return result
-        else:
-            return ""
 
     #   Functions used by the command switcher
     def __place(self):
@@ -122,6 +103,26 @@ class RobotController:
     def execCommand(self,command):
         # save the commandstring locally to extract the parameters (i.e. PLACE command)
         self._commandstring = command
+        argument = ""
         # extract the command and call the switcher
-        returntxt = self.__commandSwitcher(self._commandstring.split()[0])
-        return returntxt
+        if self._commandstring.split():
+            argument = self._commandstring.split()[0]
+
+
+        switcher = {
+            "PLACE"     : self.__place,
+            "LEFT"      : self.__left,
+            "RIGHT"     : self.__right,
+            "MOVE"      : self.__move,
+            "REPORT"    : self.__report,
+        }
+        func = switcher.get(argument, lambda: RcResponse.invCommand.value)
+        result = func()
+
+    #   Report ist the only command allowed to give a respone whitout verbose mode
+
+        if argument == "REPORT" or self._verbose:
+            return result
+        else:
+            return ""
+

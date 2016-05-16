@@ -1,24 +1,23 @@
 # SimpleRobot
 
-Implementation of a robot able to ...
+Implementation of a robot able to accept basic movement commands.
 
-# Environments
+## Environments
 
-The application has been implemented using PYHTON 3.5.1 and tested on Windows 10. Since only basic Python libraries
-has been used the code should run un every operating system.
+The application has been implemented using PYHTON 3.5.1 and tested on Windows 10. Only basic Python libraries has been used.
 
 The code will not run on PYTHON 2.x
 
 
 
-# Usage Instructions
+## Usage Instructions
 
 The program is launched using: "python robot.py" an additional parameter "-v" can be used to activate verbose mode
 which will give a response after every command.
 
 Once started the following commands can be used:
 
-> PLACE x,y,facedirection
+- PLACE x,y,facedirection
 Places the robot on the grid with the given parameters.
 
 x and y has to be integer values from 0 to 4
@@ -28,23 +27,23 @@ This is the first command that has to be given to the robot. If not placed corre
 all commands
 
 
-> LEFT
+- LEFT
 The robot will turn 90° left
 
-> RIGHT
+- RIGHT
 The robot will turn 90° right
 
-> MOVE
+- MOVE
 The robot will move one square in the facing direction. If the robot would fall of the  the table the command is ignored
 
-> REPORT
+- REPORT
 Will report the x,y and the direction the robot is facing
 
-> EXIT
+- EXIT
 Exits the program
 
 
-# Testing Instructions
+## Testing Instructions
 
 Two unit test has been implemented to test the robot and the robotController:
 
@@ -54,7 +53,7 @@ use:
 
 
 
-# Design
+## Design
 
 The programm is composed of three parts:
 
@@ -68,7 +67,7 @@ Checks commands for errors and passes them to the robot
 Actual robot logic, implemented as a simple state machine. All the inputs and outputs of the functions are integer values
 
 
-The main programm reads the input from the console and passes it to the roboController usig the execCommand() function.
+The main program reads the input from the console and passes it to the roboController usig the execCommand() function.
 The controller checks if there are any errors in the command or the parameters and if everything is alright it passes
 the command to the simple_robot calling the associated function.
 The simple_robot will then try to execute the command, if an error happens the function will return an error, the robo_controller
