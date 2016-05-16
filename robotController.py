@@ -1,4 +1,4 @@
-from simple_robot import *
+from simpleRobot import *
 
 '''
 The RobotController interprets the commands given as input, checks them for errors and passes it to the robot.
