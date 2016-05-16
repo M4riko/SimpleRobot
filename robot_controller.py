@@ -1,4 +1,4 @@
-from simple_Robot import *
+from simple_robot import *
 
 '''
 The RobotController interprets the commands given as input, checks them for errors and passes it to the robot.
@@ -99,7 +99,8 @@ class RobotController:
         x,y,face = self._robot.report()
         directions = ["NORTH","EAST","SOUTH","WEST"]
         return str(x) + "," + str(y) + "," +  directions[face]
-    #
+
+
     def execCommand(self,command):
         # save the commandstring locally to extract the parameters (i.e. PLACE command)
         self._commandstring = command
@@ -107,7 +108,6 @@ class RobotController:
         # extract the command and call the switcher
         if self._commandstring.split():
             argument = self._commandstring.split()[0]
-
 
         switcher = {
             "PLACE"     : self.__place,
@@ -119,7 +119,7 @@ class RobotController:
         func = switcher.get(argument, lambda: RcResponse.invCommand.value)
         result = func()
 
-    #   Report ist the only command allowed to give a respone whitout verbose mode
+    #   Report ist the only command allowed to give a response without verbose mode
 
         if argument == "REPORT" or self._verbose:
             return result
