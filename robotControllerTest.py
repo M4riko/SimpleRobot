@@ -6,9 +6,8 @@ CommandTestSequence1Result = "1,4,NORTH"
 
 CommandTestSequence2 = ["PLACE 1,1,SOUTH", "MOVE","MOVE","LEFT","LEFT","MOVE","MOVE","MOVE","RIGHT","RIGHT","RIGHT",
                         "MOVE","MOVE","REPORT"]
+
 CommandTestSequence2Result = "0,3,WEST"
-
-
 
 from robotController import *
 
@@ -55,7 +54,6 @@ class TestRobotController(unittest.TestCase):
 
 
     #   Tests verbose mode
-
     #   invalid place commands
     def test_V_PLACE_invalid1(self):
         self._robotController.setVerbose(True)
@@ -138,7 +136,6 @@ class TestRobotController(unittest.TestCase):
         self._robotController.execCommand("PLACE 1,1,SOUTH" )
         self.assertEqual(self._robotController.execCommand("MOVE"), "Command accepted" )
 
-
     #   Test fall of condition
     def test_V_P_MOVE(self):
         self._robotController.setVerbose(True)
@@ -157,8 +154,6 @@ class TestRobotController(unittest.TestCase):
         for a in CommandTestSequence2:
             res = self._robotController.execCommand(a)
         self.assertEqual(res,CommandTestSequence2Result)
-
-
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestRobotController)

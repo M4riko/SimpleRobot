@@ -1,4 +1,6 @@
 from simpleRobot import *
+from enum import Enum
+
 
 '''
 The RobotController interprets the commands given as input, checks them for errors and passes it to the robot.
@@ -7,8 +9,6 @@ At the moment there is only a single robot in use. More commands could be added 
 The if verbose mode is set by calling the setVerbose(True) the execCommand function will return a status string
 after every command. (See RcResponse) else an empty string is returned
 '''
-
-from enum import Enum
 
 class RcResponse(Enum):
     invParams       =   "Invalid parameters. usage: PLACE x,y,facedirection"
@@ -34,7 +34,6 @@ class RobotController:
 
     def setVerbose(self,verboseMode):
         self._verbose = verboseMode
-
 
     #   Functions used by the command switcher
     def __place(self):
@@ -100,7 +99,6 @@ class RobotController:
         directions = ["NORTH","EAST","SOUTH","WEST"]
         return str(x) + "," + str(y) + "," +  directions[face]
 
-
     def execCommand(self,command):
         # save the commandstring locally to extract the parameters (i.e. PLACE command)
         self._commandstring = command
@@ -120,9 +118,7 @@ class RobotController:
         result = func()
 
     #   Report ist the only command allowed to give a response without verbose mode
-
         if argument == "REPORT" or self._verbose:
             return result
         else:
             return ""
-

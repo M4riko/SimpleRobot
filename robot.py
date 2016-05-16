@@ -7,7 +7,6 @@ from robotController import *
 #   command will give a response string
 #   The user can also choose to save the commands in a file and give the filename as parameter.
 
-
 import argparse
 
 if  __name__ == '__main__':

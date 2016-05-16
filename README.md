@@ -9,7 +9,6 @@ The application has been implemented using PYHTON 3.5.1 and tested on Windows 10
 The code will not run on PYTHON 2.x
 
 
-
 ## Usage Instructions
 
 The program is launched using: "python robot.py" an additional parameter "-v" can be used to activate verbose mode

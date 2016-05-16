@@ -12,8 +12,6 @@ The robot accepts 5 commands:
 Since the problem is deterministic (the robot always knows where he is on the grid) there is no need to create an actual grid
 instead the position and facing is stored in internal variables and updated on any command.
 The robot can be moved once it is placed, it will ignore commands given before the first place command.
-
-
 '''
 
 from enum import Enum
