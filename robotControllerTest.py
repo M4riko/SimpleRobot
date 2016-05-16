@@ -10,7 +10,7 @@ CommandTestSequence2Result = "0,3,WEST"
 
 
 
-from robot_controller import *
+from robotController import *
 
 class TestRobotController(unittest.TestCase):
 
