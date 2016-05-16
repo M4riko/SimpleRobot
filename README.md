@@ -71,7 +71,7 @@ use:
 ```
 +------------------+     Command      +----------------------+     executes     +------------------+
 |                  |     String       |                      |     command      |                  |
-|      main        |  +----------->   |  RobotHandler         |  +------------>  | SimpleRobot      |
+|      main        |  +----------->   |  RobotHandler        |  +------------>  | SimpleRobot      |
 |                  |                  |                      |                  |                  |
 | - console I/O    |                  | -com. interpretation |                  | -Robot logic     |
 | - file I/O       |                  | -error hadling       |                  |                  |
@@ -114,8 +114,8 @@ Passive view: main program -> interacts with the user
 Presenter: RoboController -> interacts with the model and formats display for the view
 Model:	simpleRobot -> acts on inputs and generates data for the output
 
-The model is a derived form of the Model-view-controller but the view in this case is not a separate enitiy. Morover the presenter
-acts as "Middle Men" between the actual user interface and the model. I choose this model becouse it allowes a complete separation
+The model is a derived form of the Model-view-controller but the view in this case is not a separate enitiy. Moreover the presenter
+acts as "Middle Men" between the actual user interface and the model. I choose this model because it allowes a complete separation
 of the command interpretation and the changes in the model, also it would be straight forward to change how the data is delivered to the presenter
 (i.e: over a socket connection)
 
