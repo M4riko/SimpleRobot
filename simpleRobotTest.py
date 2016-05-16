@@ -1,7 +1,7 @@
 # Tests the functionality of the simple_Robot class
 import unittest
 
-from simple_robot import *
+from simpleRobot import *
 
 class TestRobot(unittest.TestCase):
 
